@@ -5,9 +5,16 @@ An API-enabled singing bowl robot for wake-up alarm, doorbell and meditation. Po
 <img alt="Singing Bell Demo" src="/img/singing-bell-a.jpg" width="400">
 
 # Usage
+This is an advanced project; requiring skills in Python programming, general application design and 3D printing. A working implementation requires:
 
-**IMPORTANT**  
-This project does not provide a user interface for controlling the bell. Instead, it provides an API for use with another app or frontend. Presently, our home uses a quick-and-dirty solution on my Android device (Tasker) as an alarm/meditation app with future designs for a more robust server frontend.
+- A CircuitPython compatible microcontroller running [CircuitPython 8 or higher](https://circuitpython.org/). Get libraries from [here](https://github.com/adafruit/circuitpython).
+- A 5v servo motor to swing the mallet (or comparable alternative).
+- A manufactured housing of some kind (3D print models are on [Tinkercad](https://www.tinkercad.com/things/ihloFZPHmth?sharecode=iWwOf8UDUHXrbG2nKjJkbB91yBh4DRdOCrIBXainu0E)).
+- An client app to communicate with the Singing Bell.
+- Also, a singing bowl would be helpful. 😉
+
+**PLEASE NOTE!**  
+This project does not provide a user interface for controlling the bell. Instead, it provides a web API for use with another app or frontend. *You will need to write your own frontend/client application to use this project.* Presently, I'm using a [surprisingly good!] quick-and-dirty solution on my Android device (Tasker) with future designs for a more robust server frontend.
 
 ## Servo Motor
 The solution works by striking the singing bowl with its proper mallet attached to a servo motor. Frankly, any 5v servo should suffice, just make sure to configure the appropriate pin in `main.py`:
@@ -17,7 +24,7 @@ The solution works by striking the singing bowl with its proper mallet attached 
 ```
 
 ## Calibration
-Servo motors aren't smart, so the unit does not know how far away the mallet is from the singing bowl at any given time. To address this, the unit needs an appropriate calibration angle so it knows which position will strike the bowl. This value is used to calculate more precise ready, middle and chiming angles:
+Servo motors aren't smart, so the unit won't know how far away the mallet is from the singing bowl at any given time. To address this, the unit needs an appropriate calibration angle so it knows which position will strike the bowl. This value is used to calculate more precise ready, middle and chiming angles:
 
 ```
     calib_angle  = 165
