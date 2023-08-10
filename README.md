@@ -20,23 +20,23 @@ This project does not provide a user interface for controlling the bell. Instead
 The solution works by striking the singing bowl with its proper mallet attached to a servo motor. Frankly, any 5v servo should suffice, just make sure to configure the appropriate pin in `main.py`:
 
 ```
-    mallet_pin = board.A0
+  mallet_pin = board.A0
 ```
 
 ## Calibration
 Servo motors aren't smart, so the unit won't know how far away the mallet is from the singing bowl at any given time. To address this, the unit needs an appropriate calibration angle so it knows which position will strike the bowl. This value is used to calculate more precise ready, middle and chiming angles:
 
 ```
-    calib_angle  = 165
+  calib_angle  = 165
 ```
 
 ## Network
 To work, the unit will need to connect to a WiFi network and be configured with a static IP. Update `settings.toml` to connect the device to WiFi and the following lines in `main.py` to configure the IP:
 
 ```
-    gateway_ip   = "0.0.0.0"
-    ipv4         = ipaddress.IPv4Address("0.0.0.0")
-    netmask      = ipaddress.IPv4Address("255.255.255.0")
+  gateway_ip   = "0.0.0.0"
+  ipv4         = ipaddress.IPv4Address("0.0.0.0")
+  netmask      = ipaddress.IPv4Address("255.255.255.0")
 ```
 ## API Reference
 
@@ -44,14 +44,14 @@ To work, the unit will need to connect to a WiFi network and be configured with 
 Queries the unit for its current status, returns a simple JSON array.
 
 ```
-/api/status
+  /api/status
 ```
 
 ### Calibration
 Initiates a 10 second calibration sequence. If the `angle` parameter (int) is supplied the unit will position the mallet to the specified angle. Omitted, the unit will use the default (internal) calibration angle. Returns a status report.
 
 ```
-/api/calibrate [ ?angle= [angle] ]
+  /api/calibrate [ ?angle= [angle] ]
 ```
 
 ### Chiming
@@ -62,7 +62,7 @@ Initiates the requested chiming action and returns a status acknowledgement. Chi
 - `doorbell` requires only `start` and will stop on its own (ignores `stop`). 
 
 ```
-/api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
+  /api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
 ```
 
 ## TO DO
