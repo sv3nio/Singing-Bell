@@ -12,9 +12,10 @@ This is an advanced project; requiring skills in microelectronics, Python progra
 - A manufactured housing of some kind (3D print models are on [Tinkercad](https://www.tinkercad.com/things/ihloFZPHmth?sharecode=iWwOf8UDUHXrbG2nKjJkbB91yBh4DRdOCrIBXainu0E)).
 - A client app to make the things go.
 - A super-awesome singing bowl! 😉
-
+<br>
 ⚠️ IMPORTANT ⚠️  
 This project does not provide a user interface for controlling the bell. Instead, it provides a web API for use with another app or frontend. *You will need to write your own frontend/client application to use this project.* Presently, I'm using a [surprisingly good!] quick-and-dirty solution on my Android device (Tasker) with future designs for a more robust server frontend.
+<br>
 
 ## Servo Motor
 The solution works by striking the singing bowl with its proper mallet attached to a servo motor. Frankly, any 5v servo should suffice, just make sure to configure the appropriate pin in `main.py`:
