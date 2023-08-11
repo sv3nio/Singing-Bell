@@ -5,7 +5,7 @@ An API-enabled singing bowl robot for wake-up alarm, doorbell and meditation. Po
 <img alt="Singing Bell Demo" src="/img/singing-bell-a.jpg" width="400">
 
 # Usage
-This is an advanced project requiring skills in: microelectronics, Python programming, application design and 3D printing. A working implementation will need:
+This is an advanced project requiring skills in: microelectronics, Python, application design and 3D printing. A working implementation will need:
 
 - A CircuitPython compatible microcontroller running [CircuitPython 8 or higher](https://circuitpython.org/). Get libraries from [here](https://github.com/adafruit/circuitpython).
 - A 5v servo motor to swing the mallet (or comparable alternative).
@@ -15,6 +15,9 @@ This is an advanced project requiring skills in: microelectronics, Python progra
 
 ⚠️ IMPORTANT ⚠️  
 This project does not provide a user interface for controlling the bell. Instead, it provides a web API for use with another app or frontend. *You will need to write your own client application to use this project.* Presently, I'm using a [surprisingly good!] quick-and-dirty solution on my Android device (Tasker) with future designs for a more robust server frontend.
+
+## How It Works
+The CircuitPython application is divided into two tasks using `asyncio`. `server_task` looks after the web server and monitors for connections, while `chimer_task` manages chiming events. When the web server receives a command the relevant function updates the `chime_manager` object which is queried by `chimer_task` to trigger the appropriate action. When that action completes (or a `stop` command is recieved), the `chime_manager` is again updated to terminate the action.
 
 ## Servo Motor
 The solution works by striking the singing bowl with its proper mallet attached to a servo motor. Frankly, any 5v servo should suffice, just make sure to configure the appropriate pin in `main.py`:
@@ -58,8 +61,8 @@ Initiates a 10 second calibration sequence. If the `angle` parameter (int) is su
 Initiates the requested chiming action and returns a status acknowledgement. Chime intervals are statically encoded and will need to be customized to accomodate the individual project. Each chime type has its own behaviours:
 
 - `meditate` requires both `start` and `stop` action commands. Without explicit stopping, it will chime indefintely.
-- `alarm` requires only the `start` action, but will honour `stop` when received. Without a `stop` instruction, the unit will automatically stop the wake-up alarm sequence after 10 chimes (~70 seconds). This is customizable.
-- `doorbell` requires only `start` and will stop on its own (ignores `stop`). 
+- `alarm` requires only the `start` command, but will honour `stop` when received. Without a `stop` instruction, the unit will automatically terminate the alarm sequence after 10 chimes (~70 seconds). This is customizable.
+- `doorbell` requires only `start` and stops on its own (ignores `stop`). 
 
 ```
   /api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
