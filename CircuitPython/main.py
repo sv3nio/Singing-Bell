@@ -167,7 +167,7 @@ async def chimer_task():
 
         # Wake-up Alarm
         # Instead of a while loop, the wake-up alarm block uses a range counter to prevent the
-        # bell from chiming indefinitely in the unlikely event that the "stop" command doesn't arrive.
+        # bell from chiming indefinitely in case a "stop" command doesn't arrive.
         if chime_manager.type == "alarm" and chime_manager.action == "start":
             for _ in range(10):
                 if chime_manager.type == "alarm" and chime_manager.action == "stop":
@@ -183,7 +183,7 @@ async def chimer_task():
                     time.sleep(0.05)
                 await asyncio.sleep(7)
 
-            # Stop the chiming if no "stop" command arrives
+            # Discontinue chiming if no "stop" command arrives
             chime_manager.action = "stop"
             chime_manager.status = "idle"
         
