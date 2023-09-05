@@ -47,14 +47,15 @@ To work, the unit will need to connect to a WiFi network and be configured with 
 Queries the unit for its current status, returns a simple JSON array.
 
 ```
-  /api/status
+  HTTP GET /api/status
 ```
 
 ### Calibration
 Initiates a 10 second calibration sequence. If the `angle` parameter (int) is supplied the unit will position the mallet to the specified angle. Omitted, the unit will use the default (internal) calibration angle. Returns a status acknowledgement.
 
 ```
-  /api/calibrate [ ?angle= [angle] ]
+  HTTP PUT /api/calibrate
+  HTTP PUT /api/calibrate?angle={angle}
 ```
 
 ### Chiming
@@ -65,11 +66,11 @@ Initiates the requested chiming action and returns a status acknowledgement. Chi
 - `doorbell` requires only `start` and stops on its own (ignores `stop`). 
 
 ```
-  /api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
+  HTTP PUT /api/chime?type={type}&action={action}
 ```
 
 ## TO DO
 
 - [Bearer token auth](https://docs.circuitpython.org/projects/httpserver/en/latest/examples.html#authentication) to prevent authorized access.
 - Better input validation and error handling. Currently, invalid input is silently ignored.
-- Encryption? Without HTTPS, there needs to be another way of securing comms.
+- Encryption? Security tokens? Without HTTPS, there needs to be another way of securing C&C.

@@ -64,21 +64,30 @@ def send_response(request, data):
 
 
 # HTTP Server Routes
-@server.route("/api/calibrate") # Example: /api/calibrate?angle=165 
+@server.route("/api/status", "GET")  # Example: /api/status
+def status_api(request: HTTPRequest):
+    send_response(request, {"type": chime_manager.type,
+                            "action": chime_manager.action,
+                            "status": chime_manager.status})
+
+@server.route("/api/calibrate", "PUT") # Example: /api/calibrate?angle=165 
 def calibrate(request: HTTPRequest):
     test_angle = request.query_params.get("angle")
 
-    # TODO: 
-    # - Validate angle range X-Y (negative values?)
-    # - Data type (int)
+    # TO DO: 
+    # - Validate test_angle range X-Y (negative values?)
+    # - Datatype (int) error feedback
 
     if test_angle:
         try:
             mallet.angle = int(test_angle)
         except:
             return
+        print("\nBeginning mallet calibration sequence...")
+        print(" --> Mallet is in position for the next 10 seconds.\n --> Use this time to adjust the position of the bowl.")
         time.sleep(10)
         mallet.angle = ready_angle
+        print("Calibration sequence complete.")
     else:
         print("\nBeginning mallet calibration sequence...")
         for angle in range(ready_angle, calib_angle, 1):
@@ -96,7 +105,7 @@ def calibrate(request: HTTPRequest):
                         "status": "idle"})
 
 
-@server.route("/api/chime")         # Example: /api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
+@server.route("/api/chime", "PUT")         # Example: /api/chime?type= [ alarm | meditate | doorbell ] &action= [ start | stop ] 
 def chime_api(request: HTTPRequest):
     type = request.query_params.get("type")
     action = request.query_params.get("action")
@@ -120,12 +129,6 @@ def chime_api(request: HTTPRequest):
                             "action": chime_manager.action,
                             "status": chime_manager.status})
 
-
-@server.route("/api/status")         # Example: /api/status
-def status_api(request: HTTPRequest):
-    send_response(request, {"type": chime_manager.type,
-                            "action": chime_manager.action,
-                            "status": chime_manager.status})
 
 async def server_task():
     clock = time.monotonic()
@@ -209,7 +212,7 @@ async def chimer_task():
             time.sleep(0.02)
             # Second strike
             mallet.angle = mid_angle
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.3)
             mallet.angle = chime_angle
             time.sleep(0.02)
             mallet.angle = mid_angle
