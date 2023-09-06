@@ -4,7 +4,7 @@ An API-enabled singing bowl robot for wake-up alarm, doorbell and meditation. Po
 
 <img alt="Singing Bell Demo" src="/img/singing-bell-a.jpg" width="400">
 
-# Usage
+## Usage
 This is an advanced project requiring skills in: microelectronics, Python, application design and 3D printing. A working implementation will need:
 
 - A CircuitPython compatible microcontroller running [CircuitPython 8 or higher](https://circuitpython.org/). Get libraries from [here](https://github.com/adafruit/circuitpython).
@@ -16,24 +16,24 @@ This is an advanced project requiring skills in: microelectronics, Python, appli
 ⚠️ IMPORTANT ⚠️  
 This project does not provide a user interface for controlling the bell. Instead, it provides a web API for use with another app or frontend. *You will need to write your own client application to use this project.* Presently, I'm using a [surprisingly good!] quick-and-dirty solution on my Android device (Tasker) with future designs for a more robust server frontend.
 
-## How It Works
+### How It Works
 The CircuitPython application is divided into two tasks using `asyncio`. `server_task` looks after the web server and monitors for connections, while `chimer_task` manages chiming events. When the web server receives a command the relevant function updates the `chime_manager` object which is queried by `chimer_task` to trigger the appropriate action. When that action completes (or a `stop` command is recieved), the `chime_manager` is again updated to terminate the action.
 
-## Servo Motor
+### Servo Motor
 The solution works by striking the singing bowl with its proper mallet attached to a servo motor. Frankly, any 5v servo should suffice, just make sure to configure the appropriate pin in `main.py`:
 
 ```
   mallet_pin = board.A0
 ```
 
-## Calibration
+### Calibration
 Servo motors aren't smart, so the unit won't know how far away the mallet is from the singing bowl at any given time. To address this, the unit needs an appropriate calibration angle so it knows which position will strike the bowl. This value is used to calculate more precise angles that do the actual striking:
 
 ```
   calib_angle  = 165
 ```
 
-## Network
+### Network
 To work, the unit will need to connect to a WiFi network and be configured with a static IP. Update `settings.toml` to connect the device to WiFi and the following lines in `main.py` to configure the IP:
 
 ```
