@@ -5,7 +5,7 @@ An API-enabled singing bowl robot for wake-up alarm, doorbell and meditation. Po
 <img alt="Singing Bell Demo" src="/img/singing-bell-a.jpg" width="400">
 
 ## Usage
-This is an advanced project requiring skills in: microelectronics, Python, application design and 3D printing. A working implementation will need:
+This is a medium-difficulty project requiring skills in: microelectronics, Python, application design and 3D printing. A working implementation will need:
 
 - A CircuitPython compatible microcontroller running [CircuitPython 8 or higher](https://circuitpython.org/). Get libraries from [here](https://github.com/adafruit/circuitpython).
 - A 5v servo motor to swing the mallet (or comparable alternative).
