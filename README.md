@@ -71,6 +71,6 @@ Initiates the requested chiming action and returns a status acknowledgement. Chi
 
 ## TO DO
 
-- [Bearer token auth](https://docs.circuitpython.org/projects/httpserver/en/latest/examples.html#authentication) to prevent authorized access.
-- Better input validation and error handling. Currently, invalid input is silently ignored.
-- Encryption? Security tokens? Without HTTPS, there needs to be another way of securing C&C.
+- [Bearer token auth](https://docs.circuitpython.org/projects/httpserver/en/latest/examples.html#authentication) to prevent unauthorized access. --> NEXT RELEASE!
+- Better input validation and error handling. Currently, invalid input is silently ignored. --> NEXT RELEASE!
+- Encryption? Security tokens? Without HTTPS, there needs to be another way of securing C&C. --> NEXT RELEASE!
